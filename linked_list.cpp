@@ -1,103 +1,55 @@
-#include<iostream>
-#include<stdexcept>
+#include <iostream>
+#include <list>
+#include <string>
+#include <algorithm>
 
 
-template <typename T> struct Node;
-
-template <typename T>
-class LinkedList {
-    private:
-    Node<T>* head;
-    Node<T>* tail;
-    int size;
-
-    public:
-    LinkedList():head(nullptr), tail(nullptr),size(0){}
-    ~LinkedList() {
-        Node<T>* current = head;
-        while (current !=nullptr){
-            Node<T>* next_node = current->next;
-            delete current;
-            current = next_node;
-        }
-        head = nullptr;
-        tail = nullptr;
-        size=0;
-        std::cout<<"\nLinked List\n";
+void printList(const std::list<std::string>& list){
+    std::cout<< "List Content";
+    for (const auto& item : list){
+        std::cout<<item<<std::endl;
     }
-    bool isEmpty() const {
-        return head==nullptr;
-    }
-    int getSize() const {
-        return size;
-    }
-    void display() const{
-        if (isEmpty()){
-            std::cout<<"List is empty";
-            return;
-        }
-        Node<T>* current = head;
-        std::cout<<"List:::";
-        while (current!=nullptr){
-            std::cout<<current->data;
-            if (current->next!=nullptr){
-                std::cout<<"->";
-            }
-            current = current->next;
-        }
-    }
-    std::cout<<"(Size:"<<size<<")\n";
+    std::cout<<std::endl;
 }
 
-void push_front(T val){
-    Node<T>* new_node = Node<T>(val);
 
-    if (isEmpty()){
-        head = new_node;
-        tail = new_node;
-    } else {
-        new_node->next = head;
-        head = new_node;
-    }
-    size++;
-    std::cout<<"Pushed front::"<<val<<"\n";
-}
 
-void push_back(T val){
-    Node<T>* new_node = new Node<T>(val);
-    if (isEmpty()){
-        head = new_node;
-        tail = new_node;
-    } else {
-        tail->next = new_node;
-        tail = new_node;
-    }
-    size++;
-    std::cout<<"Pushed Back"<<val<<"\n";
-}
+int main(){
+    std::list<std::string> grocery_list;
+    std::cout<<"1. Initialize an empty list."<<std::endl;
+    printList(grocery_list);
 
-bool insert_after(T key,T val_to_insert){
-    if (isEmpty()){
-        std::cout<<"Cannot insert after::"<<key;
-        return false;
-    }
-    Node<T>* current = head;
-    while (current !=nullptr && current->data !=key){
-        current = current->next;
-    }
 
-    if (current == nullptr){
-        std::cout<<"Key"<<key;
-        return false;
-    } else {
-        Node<T>* new_node = new Node<T>(val_to_insert);
-        new_node->next = current->next;
-        current->next = new_node;
-        if (current == tail){
-            tail = new_node;
-        }
-        size++;
-        std::cout<<"Inserted"<<val_to_insert<<key<<"\n";
-        return true;
+    std::cout<<"2.Adding element.."<<std::endl;
+    grocery_list.push_back("Milk");
+    grocery_list.push_back("Bread");
+    grocery_list.push_back("Butter");
+
+    printList(grocery_list);
+
+    std::cout<<"Inserting Eggs before bread..."<<std::endl;
+    auto it = std::find(grocery_list.begin(),grocery_list.end(),"Bread");
+
+    if (it != grocery_list.end()){
+
+        grocery_list.insert(it,"Egg");
     }
+    printList(grocery_list);
+
+    std::cout<< "Removing elements...."<<std::endl;
+
+    grocery_list.pop_front();
+
+    printList(grocery_list);
+
+    std::cout<< "Acessing elements..."<<std::endl;
+    std::cout<< "Front element:"<<grocery_list.front()<<std::endl;
+    std::cout<<"Back element:"<<grocery_list.back();
+    printList(grocery_list);
+
+    grocery_list.sort();
+    std::cout<<"Sort list::"<<std::endl;
+    printList(grocery_list);
+
+    return 0;
 }
