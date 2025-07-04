@@ -25,8 +25,21 @@ int main(){
 
     std::cout<<"Pushing elements to the queue"<<std::endl;
     print_jobs.push("Documents");
-    print_josb.push("Spreadsheet.xlsx");
+    print_jobs.push("Spreadsheet.xlsx");
+    print_jobs.push("photo.png");
 
+    std::cout<<"Current queue state:"<<std::endl;
+    printQueue(print_jobs);
+    std::cout<<"Size:"<<print_jobs.size()<<std::endl;
+
+    std::cout<<"Accessing the front and back elements";
+    std::cout<<"Front eleemts"<<print_jobs.front()<<std::endl;
+    std::cout<<"Back elements"<<print_jobs.back()<<std::endl;
+    while (!print_jobs.empty()){
+        std::cout<<"Printing::"<<print_jobs.front()<<std::endl;
+        print_jobs.pop();
+        printQueue(print_jobs);
+    }
 
     return 0;
 }
