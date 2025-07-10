@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.4)
+project(hello_world)
+find_package(pybind11 REQUIRED)
+set(SOURCES hello.cpp)
+pybind11_add_module(hello_world ${SOURCES})
